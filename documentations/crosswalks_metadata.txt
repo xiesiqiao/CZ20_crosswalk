@@ -1,0 +1,42 @@
+**Title:**  
+Population-Weighted Crosswalks between 2020 Commuting Zones and Historical Geographies (1990–2020)
+
+**Description:**  
+This dataset provides population-weighted crosswalks from 2020 Commuting Zones (CZ20) to multiple historical and contemporary geographies: 1990 commuting zones, 2000 and 2010 ERS commuting zones, and 2010 & 2020 PUMAs. Crosswalks were constructed using a 100m population raster derived from the 2020 Census. Each record reports population overlap, shares, and totals that allow consistent reallocation of data between geographies.
+
+**Files:**  
+- `cz20_to_cz90_popgrid100m_area.csv` – CZ20 → CZ90  
+- `cz20_to_puma20_popgrid100m_area.csv` – CZ20 → PUMA20  
+- `cz20_to_puma2010_popgrid100m_area.csv` – CZ20 → PUMA2010  
+- `cz20_to_cz2010_popgrid100m_area.csv` – CZ20 → CZ2010  
+- `cz20_to_cz2000_popgrid100m_area.csv` – CZ20 → CZ2000  
+- `cz20_grid_totals.csv` – CZ20 population totals
+
+**Variables:**  
+- `CZ20`, `CZ20_name`: 2020 CZ identifier and name  
+- `<Target>`, `<Target>_name`: Target geography ID and name  
+- `pop_overlap`: Population in overlapping grid cells  
+- `share_of_CZ20`: Share of CZ20 population in target geography  
+- `CZ20_total_pop`: CZ20 total population  
+- `state`: State identifier  
+- Metadata: cells, grid resolution, CRS, method
+
+**Geographic coverage:**  
+United States
+
+**Temporal coverage:**  
+1990, 2000, 2010, 2020
+
+**Sources:**  
+- Fowler, C.S. (2024). *New Commuting Zone delineation for the U.S. using 2020 data.* https://doi.org/10.17605/OSF.IO/J256U  
+- Dorn, D. (1990 commuting zones).  
+- USDA ERS (2000, 2010 commuting zones).  
+- IPUMS NHGIS (2010 & 2020 PUMAs).  
+- U.S. Census Bureau (2020 population counts).  
+- Zhang, Q. & Zhao, P. (2020). *A fine-scale population distribution dataset for China.* https://doi.org/10.1080/20964471.2020.1776200  
+
+**How to use:**  
+To reallocate CZ20-based statistics into target geographies, weight values by `share_of_CZ20` and aggregate by the target geography.
+
+**Citation:**  
+[Your Name]. (2025). *Population-Weighted Crosswalks between 2020 Commuting Zones and Historical Geographies (1990–2020).* [Data Repository]. https://doi.org/[DOI]
