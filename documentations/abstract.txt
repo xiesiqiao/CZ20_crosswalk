@@ -1,0 +1,8 @@
+
+**🌐 100m Population Grid (2020 Census)**
+We provide a high-resolution (100m × 100m) population distribution dataset for the entire United States, built from 2020 Census counts. Each raster allocates population to fine grid cells using methods inspired by Zhang & Zhao (2020), enabling detailed spatial analysis of population patterns across states and regions. The dataset is designed for research and policy applications that require consistent, reproducible population estimates at sub-county scales, and is distributed as state-level GeoTIFF files in a standard projected coordinate system (EPSG:5070).
+
+**🔗 Crosswalks between Commuting Zones and Historical Geographies (1990–2020)**
+Using the 100m grid, we construct population-weighted crosswalks that link 2020 Commuting Zones (CZ20) and 2020 PUMAs with historical geographies: 1990 commuting zones, 2000 and 2010 ERS commuting zones, and 2010 & 2020 PUMAs. Each crosswalk reports population overlaps, shares, and totals that allow researchers to reallocate data consistently between geographies across time. These CSV crosswalks are suited for harmonizing statistics, such as jobs or household counts, while preserving national totals and enabling longitudinal analysis of labor markets, communities, and regions.
+
+
