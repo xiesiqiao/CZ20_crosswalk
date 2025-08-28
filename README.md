@@ -34,7 +34,6 @@ Crosswalks are built using **population overlap on a 100m grid**, following Zhan
 
 ---
 
-````markdown
 
 ## Crosswalk structure
 
@@ -143,8 +142,3 @@ If you use these data, please cite:
 
 For questions, please contact:
 **Siqiao Xie** — [siqiao.xie@colorado.edu](mailto:siqiao.xie@colorado.edu)
-
-```
-
-would you also like me to insert a **summary matrix/table** (rows = source, columns = targets) at the top so readers can see all available crosswalks in one glance?
-```

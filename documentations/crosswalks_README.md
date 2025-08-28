@@ -25,7 +25,6 @@ Crosswalk files (CSV), one per source–target pair:
 
 ## Variables
 
-````markdown
 **For CZ20-based crosswalks (CZ20 → target):**
 
 | Variable         | Description                                  |
@@ -141,6 +140,5 @@ weighted = (cw.merge(data_puma20, on="PUMA20")
 
 ---
 
-```
 
 
