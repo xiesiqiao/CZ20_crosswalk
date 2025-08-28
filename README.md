@@ -1,6 +1,4 @@
-
-````markdown
-# 📊 CZ20 Crosswalks & 100m Population Grid (U.S. 2020 census)
+# CZ20 Crosswalks & 100m Population Grid (U.S. 2020 census)
 
 This repository provides reproducible code, 100m-resolution population grids (2020 census), and **population-weighted crosswalks** linking modern geographies with legacy standards.
 
@@ -8,25 +6,25 @@ Crosswalks are built using **population overlap on a 100m grid**, following Zhan
 
 ---
 
-## 📂 Contents
+## Contents
 
 * **`/code/`** — R scripts for generating the crosswalks and processing the population grid  
 * **`/output/population_grid/`** — state-level 100m × 100m population GeoTIFFs (EPSG:5070)  
 * **`/output/crosswalks/`** — population-weighted crosswalk CSVs:
 
-  **From CZ20 (2020 commuting zones) to:**
-  * **CZ90** (Dorn 1990)  
-  * **CZ2000** (USDA ERS)  
-  * **CZ2010** (USDA ERS)  
+**From CZ20 (2020 commuting zones) to:**
+* **CZ90** (Dorn 1990)  
+* **CZ2000** (USDA ERS)  
+* **CZ2010** (USDA ERS)  
 
-  **From PUMAs to CZs:**
-  * **PUMA2020 → CZ90**  
-  * **PUMA2020 → CZ20**  
-  * **PUMA2010 → CZ20**  
+**From PUMAs to CZs:**
+* **PUMA2020 → CZ90**  
+* **PUMA2020 → CZ20**  
+* **PUMA2010 → CZ20**  
 
 ---
 
-## 🧾 Data Sources
+## Data Sources
 
 * **CZ20 (2020 commuting zones):** Fowler, C.S. (2024). *New Commuting Zone delineation for the U.S. using 2020 data.* [https://doi.org/10.17605/OSF.IO/J256U](https://doi.org/10.17605/OSF.IO/J256U)  
 * **Population grid (method inspiration):** Zhang, Q. & Zhao, P. (2020). *A fine-scale population distribution dataset for China.* *Big Earth Data, 4(2): 123–139.* [https://doi.org/10.1080/20964471.2020.1776200](https://doi.org/10.1080/20964471.2020.1776200)  
@@ -36,7 +34,9 @@ Crosswalks are built using **population overlap on a 100m grid**, following Zhan
 
 ---
 
-## 📐 Crosswalk structure
+````markdown
+
+## Crosswalk structure
 
 Each crosswalk is a **CSV file**. The “from” geography is always labeled in the totals/share columns.
 
@@ -47,6 +47,7 @@ Each crosswalk is a **CSV file**. The “from” geography is always labeled in 
 | `CZ20`           | CZ20 identifier                                                |
 | `CZ20_total_pop` | Total CZ20 population (from grid)                              |
 | `share_of_CZ20`  | Share of CZ20 population overlapping with the target geography |
+| `afactor`        | Identical to `share_of_CZ20`                                   |
 | `<TARGET>`       | Target geography ID (CZ90, CZ2000, CZ2010)                     |
 | `<TARGET>_name`  | Target geography name (if available)                           |
 | `pop_overlap`    | Population overlapping between CZ20 and target unit            |
@@ -62,7 +63,8 @@ Each crosswalk is a **CSV file**. The “from” geography is always labeled in 
 | `PUMA20` / `PUMA2010` | PUMA identifier (GISJOIN)                         |
 | `<PUMA>_name`      | PUMA name                                           |
 | `<PUMA>_total_pop` | Total population of the PUMA (from grid)            |
-| `share_of_<PUMA>`  | Share of PUMA population overlapping with CZ targetalso named as (afactor) |
+| `share_of_<PUMA>`  | Share of PUMA population overlapping with CZ target |
+| `afactor`          | Identical to `share_of_<PUMA>`                      |
 | `CZ20` / `CZ90`    | Target commuting zone ID                            |
 | `<TARGET>_name`    | Target commuting zone name (if available)           |
 | `pop_overlap`      | Population overlapping between PUMA and CZ target   |
@@ -73,10 +75,10 @@ Each crosswalk is a **CSV file**. The “from” geography is always labeled in 
 
 ---
 
-## 🧮 How to use the crosswalks
+## How to use the crosswalks
 
 * **Totals (e.g., jobs, households):**  
-  Multiply the “from” geography totals by `share_of_<FROM>` and aggregate by the target geography.  
+  Multiply the “from” geography totals by `share_of_<FROM>` (or `afactor`) and aggregate by the target geography.  
 
 * **Rates/means (e.g., average income):**  
   Weight by the underlying population. Reallocate numerators and denominators separately, then recompute rates.  
@@ -87,7 +89,7 @@ Each crosswalk is a **CSV file**. The “from” geography is always labeled in 
 
 ---
 
-## 🚀 Example Usage (R)
+## Example Usage (R)
 
 ### CZ20 → CZ2000 (jobs allocation)
 
@@ -119,7 +121,7 @@ alloc <- cw %>%
 
 ---
 
-## 🔁 Reproducibility
+## Reproducibility
 
 * All processing is scripted in **R** (see `/code/` folder).
 * Requires: `sf`, `dplyr`, `data.table`, `terra`, `readr`.
@@ -142,7 +144,7 @@ If you use these data, please cite:
 For questions, please contact:
 **Siqiao Xie** — [siqiao.xie@colorado.edu](mailto:siqiao.xie@colorado.edu)
 
----
-
 ```
 
+would you also like me to insert a **summary matrix/table** (rows = source, columns = targets) at the top so readers can see all available crosswalks in one glance?
+```

@@ -1,4 +1,3 @@
-````markdown
 # U.S. Commuting Zone (2020) & PUMA Crosswalks to Historical Geographies
 
 This repository provides population-weighted crosswalks between **2020 Commuting Zones (CZ20)**, **2010 & 2020 PUMAs**, and historical commuting zones (1990, 2000, 2010 ERS).  
@@ -26,6 +25,7 @@ Crosswalk files (CSV), one per source–target pair:
 
 ## Variables
 
+````markdown
 **For CZ20-based crosswalks (CZ20 → target):**
 
 | Variable         | Description                                  |
