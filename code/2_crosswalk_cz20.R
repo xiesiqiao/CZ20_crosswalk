@@ -1,5 +1,5 @@
 # ==========================================================
-# National crosswalks: CZ20 -> {CZ90, PUMA20, PUMA2010, CZ2010, CZ2000}
+# National crosswalks: CZ20 -> {CZ90, CZ2010, CZ2000}
 # Uses 100 m population GeoTIFFs (EPSG:5070) across ALL states.
 # Output: one national CSV per target geography.
 # ==========================================================
@@ -14,7 +14,6 @@ base_root <- "C:/Users/xiesi/ASU Dropbox/Xie Sijiao/Connor-Kemeny-Storper/Microd
 input_dir <- file.path(base_root, "input")
 dir_1990  <- file.path(input_dir, "processed", "boundaries_1990")
 dir_2020  <- file.path(input_dir, "processed", "boundaries_2020")
-dir_2010  <- file.path(input_dir, "processed", "boundaries_2010")
 dir_cz10  <- file.path(input_dir, "2010 boundaries")
 dir_cz00  <- file.path(input_dir, "2000 boundaries")
 
@@ -91,7 +90,7 @@ finalize_table <- function(pairs_dt, totals_dt, from_map, to_map, to_names, targ
   to_lu   <- to_map   |> left_join(to_names, by = "id") |> 
     rename(!!target_label := id, !!paste0(target_label,"_name") := name, code_to = code)
   
-  res <- pairs_dt |>
+  pairs_dt |>
     left_join(totals_dt, by="code_from") |>
     left_join(from_lu,   by="code_from") |>
     left_join(to_lu,     by="code_to") |>
@@ -109,53 +108,27 @@ finalize_table <- function(pairs_dt, totals_dt, from_map, to_map, to_names, targ
       method     = !!method_tag
     ) |>
     as.data.frame()
-  
-  # Add PUMA state_fips/state when the target is PUMA*
-  if (target_label %in% c("PUMA20","PUMA2010")) {
-    fips_to_usps <- c(
-      "01"="AL","02"="AK","04"="AZ","05"="AR","06"="CA","08"="CO","09"="CT","10"="DE","11"="DC",
-      "12"="FL","13"="GA","15"="HI","16"="ID","17"="IL","18"="IN","19"="IA","20"="KS","21"="KY",
-      "22"="LA","23"="ME","24"="MD","25"="MA","26"="MI","27"="MN","28"="MS","29"="MO","30"="MT",
-      "31"="NE","32"="NV","33"="NH","34"="NJ","35"="NM","36"="NY","37"="NC","38"="ND","39"="OH",
-      "40"="OK","41"="OR","42"="PA","44"="RI","45"="SC","46"="SD","47"="TN","48"="TX","49"="UT",
-      "50"="VT","51"="VA","53"="WA","54"="WV","55"="WI","56"="WY","60"="AS","66"="GU","69"="MP",
-      "72"="PR","78"="VI"
-    )
-    tid <- res[[target_label]]
-    state_fips <- stringr::str_sub(tid, 2, 3)
-    res$state_fips <- state_fips
-    res$state      <- unname(fips_to_usps[state_fips])
-  }
-  res
 }
 
 # ---- read polygons, add codes ----
 cz20   <- read_std(file.path(dir_2020, "cz20.shp"),                 "CZ20")
 cz90   <- read_std(file.path(dir_1990, "cz.shp"),                   "cz",      "cz_name")
-puma20 <- read_std(file.path(dir_2020, "ipums_puma_2020.shp"),      "GISJOIN", "Name")
-puma10 <- read_std(file.path(dir_2010, "ipums_puma_2010_tl20.shp"), "GISJOIN", "Name")
 ers10  <- read_std(file.path(dir_cz10, "ERS10.rep.shp"),            "LM_Code")
 ers00  <- read_std(file.path(dir_cz00, "ERS00.shp"),                "LM_Code")
 
-cz20_map   <- make_code_map(cz20);   cz20   <- left_join(cz20,   cz20_map,   by="id")
-cz90_map   <- make_code_map(cz90);   cz90   <- left_join(cz90,   cz90_map,   by="id")
-puma20_map <- make_code_map(puma20); puma20 <- left_join(puma20, puma20_map, by="id")
-puma10_map <- make_code_map(puma10); puma10 <- left_join(puma10, puma10_map, by="id")
-ers10_map  <- make_code_map(ers10);  ers10  <- left_join(ers10,  ers10_map,  by="id")
-ers00_map  <- make_code_map(ers00);  ers00  <- left_join(ers00,  ers00_map,  by="id")
+cz20_map <- make_code_map(cz20);  cz20 <- left_join(cz20, cz20_map, by="id")
+cz90_map <- make_code_map(cz90);  cz90 <- left_join(cz90, cz90_map, by="id")
+ers10_map<- make_code_map(ers10); ers10<- left_join(ers10, ers10_map, by="id")
+ers00_map<- make_code_map(ers00); ers00<- left_join(ers00, ers00_map, by="id")
 
-nm_cz90 <- st_drop_geometry(cz90)   |> select(id, name)
-nm_p20  <- st_drop_geometry(puma20) |> select(id, name)
-nm_p10  <- st_drop_geometry(puma10) |> select(id, name)
-nm_e10  <- st_drop_geometry(ers10)  |> select(id, name)
-nm_e00  <- st_drop_geometry(ers00)  |> select(id, name)
+nm_cz90 <- st_drop_geometry(cz90) |> select(id, name)
+nm_e10  <- st_drop_geometry(ers10) |> select(id, name)
+nm_e00  <- st_drop_geometry(ers00) |> select(id, name)
 
-cz20_for_rast   <- cz20   |> select(code, geometry)
-cz90_for_rast   <- cz90   |> select(code, geometry)
-puma20_for_rast <- puma20 |> select(code, geometry)
-puma10_for_rast <- puma10 |> select(code, geometry)
-ers10_for_rast  <- ers10  |> select(code, geometry)
-ers00_for_rast  <- ers00  |> select(code, geometry)
+cz20_for_rast <- cz20 |> select(code, geometry)
+cz90_for_rast <- cz90 |> select(code, geometry)
+ers10_for_rast<- ers10 |> select(code, geometry)
+ers00_for_rast<- ers00 |> select(code, geometry)
 
 # ---- NATIONAL run over ALL state TIFs ----
 tifs <- list.files(grid_dir, pattern = "^[A-Z]{2}_grid100m_pop_2020_.*\\.tif$", full.names = TRUE)
@@ -163,11 +136,9 @@ stopifnot(length(tifs) > 0)
 
 acc_totals <- data.table(code_from=integer(), pop_from=numeric())  # national CZ20 totals on grid
 acc <- list(
-  CZ90     = data.table(),
-  PUMA20   = data.table(),
-  PUMA2010 = data.table(),
-  CZ2010   = data.table(),
-  CZ2000   = data.table()
+  CZ90   = data.table(),
+  CZ2010 = data.table(),
+  CZ2000 = data.table()
 )
 
 for (ti in tifs) {
@@ -199,8 +170,6 @@ for (ti in tifs) {
   }
   
   do_one(cz90_for_rast,   "CZ90")
-  do_one(puma20_for_rast, "PUMA20")
-  do_one(puma10_for_rast, "PUMA2010")
   do_one(ers10_for_rast,  "CZ2010")
   do_one(ers00_for_rast,  "CZ2000")
   
@@ -236,14 +205,11 @@ final_write <- function(key, target_label, to_map, to_names, filename) {
   
   readr::write_csv(out, file.path(out_dir, filename))
   message("Wrote: ", filename, " (", nrow(out), " rows)")
-  
 }
 
-final_write("CZ90",     "CZ90",     cz90_map,   nm_cz90, "cz20_to_cz90_popgrid100m_area.csv")
-final_write("PUMA20",   "PUMA20",   puma20_map, nm_p20,  "cz20_to_puma20_popgrid100m_area.csv")
-final_write("PUMA2010", "PUMA2010", puma10_map, nm_p10,  "cz20_to_puma2010_popgrid100m_area.csv")
-final_write("CZ2010",   "CZ2010",   ers10_map,  nm_e10,  "cz20_to_cz2010_popgrid100m_area.csv")
-final_write("CZ2000",   "CZ2000",   ers00_map,  nm_e00,  "cz20_to_cz2000_popgrid100m_area.csv")
+final_write("CZ90",   "CZ90",   cz90_map,  nm_cz90, "cz20_to_cz90_popgrid100m_area.csv")
+final_write("CZ2010", "CZ2010", ers10_map, nm_e10,  "cz20_to_cz2010_popgrid100m_area.csv")
+final_write("CZ2000", "CZ2000", ers00_map, nm_e00,  "cz20_to_cz2000_popgrid100m_area.csv")
 
 # (Optional) national CZ20 totals on the grid for QA
 readr::write_csv(as.data.frame(acc_totals), file.path(out_dir, "cz20_grid_totals_NATIONAL.csv"))

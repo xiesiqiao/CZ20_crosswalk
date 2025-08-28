@@ -6,19 +6,19 @@ This dataset provides population-weighted crosswalks between 2020 Commuting Zone
 
 * CZ20 → 1990 commuting zones (CZ90)
 * CZ20 → 2000 and 2010 ERS commuting zones
-* CZ20 → 2010 & 2020 PUMAs
-* PUMA2020 → CZ90
+* 2010 & 2020 PUMAs → CZ20
+* 2020 PUMAs → CZ90
 
 Crosswalks were constructed using a 100m population raster derived from the 2020 Census. Each record reports population overlap, shares, and totals that allow consistent reallocation of data between geographies.
 
 **Files:**
 
 * `cz20_to_cz90_popgrid100m_area.csv` – CZ20 → CZ90
-* `cz20_to_puma20_popgrid100m_area.csv` – CZ20 → PUMA20
-* `cz20_to_puma2010_popgrid100m_area.csv` – CZ20 → PUMA2010
 * `cz20_to_cz2010_popgrid100m_area.csv` – CZ20 → CZ2010
 * `cz20_to_cz2000_popgrid100m_area.csv` – CZ20 → CZ2000
-* `puma20_to_cz90_popgrid100m_area.csv` – PUMA20 → CZ90
+* `puma20_to_cz90_popgrid100m_area.csv` – PUMA2020 → CZ90
+* `puma20_to_cz20_popgrid100m_area.csv` – PUMA2020 → CZ20
+* `puma2010_to_cz20_popgrid100m_area.csv` – PUMA2010 → CZ20
 * `cz20_grid_totals.csv` – CZ20 population totals
 * `puma20_grid_totals.csv` – PUMA20 population totals
 
@@ -28,7 +28,7 @@ Each crosswalk includes:
 * `<FROM>`: Identifier for the source geography (either `CZ20` or `PUMA20`)
 * `<FROM>_name`: Source geography name (if available)
 * `<FROM>_total_pop`: Total source geography population (from 100m grid)
-* `share_of_<FROM>`: Share of source population in the target geography
+* `share_of_<FROM>`: Share of source population in the target geography (also named as `afactor`)
 * `<TARGET>`: Target geography ID (e.g., `CZ90`, `PUMA2010`)
 * `<TARGET>_name`: Target geography name (if available)
 * `pop_overlap`: Population in overlapping grid cells
