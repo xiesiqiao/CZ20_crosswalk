@@ -1,0 +1,30 @@
+**Title:**  
+U.S. 100m Population Grid (2020)
+
+**Description:**  
+This dataset provides a fine-resolution (100m × 100m) population raster for the contiguous United States, derived from the 2020 Decennial Census. The dataset disaggregates census population counts to grid cells, producing a uniform surface for spatial analysis and crosswalk creation.  
+
+**Files:**  
+- `*_grid100m_pop_2020_area.tif` – population raster for each state.
+
+**Spatial coverage:**  
+United States, 50 states.
+
+**Temporal coverage:**  
+2020.
+
+**Variables:**  
+- Raster cell value: population count per 100m × 100m cell.
+
+**Sources:**  
+- U.S. Census Bureau, 2020 Census.  
+- Zhang, Q. & Zhao, P. (2020). *A fine-scale population distribution dataset for China.* Big Earth Data, 4(2), 123–137. https://doi.org/10.1080/20964471.2020.1776200  
+
+**How to use:**  
+- Overlay with geographic boundaries to estimate population shares.  
+- Use as input for crosswalk creation.  
+- Suitable for aggregation to arbitrary boundaries.
+
+**Citation:**  
+[Your Name]. (2025). *U.S. 100m Population Grid (2020).* [Data Repository]. https://doi.org/[DOI]  
+Based on methods described in Zhang & Zhao (2020).
