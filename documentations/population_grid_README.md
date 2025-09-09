@@ -70,8 +70,7 @@ Each raster cell contains:
 
 When using this dataset, please cite:
 
-> \[Your Name]. (2025). *U.S. 100m Population Grid (2020).* \[Data Repository]. [https://doi.org/\[DOI](https://doi.org/[DOI)]
-> Based on methods described in Zhang & Zhao (2020).
+Xie, S. (2025). 100*100m Population Grid (2020 Census) [Data set]. University of Colorado Boulder. https://doi.org/10.25810/PB2D-P578
 
 ---
 

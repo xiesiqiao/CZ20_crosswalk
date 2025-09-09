@@ -133,5 +133,4 @@ weighted = (cw.merge(data_puma20, on="PUMA20")
 
 Please cite as:
 
-Fowler, C.S. (2024). *Population-Weighted Crosswalks between 2020 Commuting Zones, PUMAs, and Historical Geographies (1990–2020).*
-
+Xie, S. (2025). *Crosswalks between Commuting Zones and Historical Geographies (1990–2020) [Data set]. University of Colorado Boulder. https://doi.org/10.25810/5XP7-YE36*

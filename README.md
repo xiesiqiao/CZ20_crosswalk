@@ -133,8 +133,9 @@ alloc <- cw %>%
 
 If you use these data, please cite:
 
-* Fowler, C.S. (2024). *New Commuting Zone delineation for the U.S. using 2020 data.*
-* Zhang, Q. & Zhao, P. (2020). *A fine-scale population distribution dataset for China.*
+Xie, S. (2025). Crosswalks between Commuting Zones and Historical Geographies (1990–2020) [Data set]. University of Colorado Boulder. https://doi.org/10.25810/5XP7-YE36
+
+Xie, S. (2025). 100*100m Population Grid (2020 Census) [Data set]. University of Colorado Boulder. https://doi.org/10.25810/PB2D-P578
 
 ---
 
